@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Best benchmark</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header>
+      <h2 class="title">Raspberry PI Database Benchmark</h2>
+    </header>
+    <div class="userInput">
+      <label for="records">Launch Benchmark</label>
+      <input id="records" type="text" min="1" max="200000" />
+      <button class="btn" onclick="startBenchmark()">Start the count</button>
+      <button class="btn btn-danger" onclick="deleteRecord()">
+        Delete records
+      </button>
+    </div>
+    <div class="container">
+      <div class="chart">
+        <h4>Insert</h4>
+        <canvas id="chart0" width="40" height="40"></canvas>
+      </div>
+      <div class="chart">
+        <h4>Remove</h4>
+        <canvas id="chart1" width="40" height="40"></canvas>
+      </div>
+      <div class="chart">
+        <h4>Select</h4>
+        <canvas id="chart2" width="40" height="40"></canvas>
+      </div>
+      <div class="chart">
+        <h4>Update</h4>
+        <canvas id="chart3" width="40" height="40"></canvas>
+      </div>
+    </div>
+
+    <!-- <div class="results">
+      <table>
+        <tr>
+          <th>Number of records</th>
+          <th>Insert</th>
+          <th>Remove</th>
+          <th>Select</th>
+          <th>Update</th>
+        </tr>
+        <tr></tr>
+      </table>
+    </div> -->
+
+    <script src="/script.js"></script>
+  </body>
+</html>
