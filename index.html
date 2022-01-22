@@ -13,12 +13,13 @@
       <h2 class="title">Raspberry PI Database Benchmark</h2>
     </header>
     <div class="userInput">
-      <label for="records">Launch Benchmark</label>
-      <input id="records" type="text" min="1" max="200000" />
-      <button class="btn" onclick="startBenchmark()">Start the count</button>
+      <label for="records">Enter value between 1 and 20000</label>
+      <input id="records" type="text" min="1" max="200" />
+      <button id="btn" class="btn" onclick="startBenchmark()">Start</button>
       <button class="btn btn-danger" onclick="deleteRecord()">
         Delete records
       </button>
+      <p id="warning"></p>
     </div>
     <div class="container">
       <div class="chart">

@@ -18,6 +18,11 @@ body{
 
 }
 
+#warning{
+    color: red;
+    font-size: 30px;
+}
+
 h4{
     text-align: center;
 }
@@ -34,6 +39,7 @@ background-color: #4CAF50; /* Green */
   border-radius: 5px;
   margin-left: 20px;
   cursor: pointer;
+  width: 125px;
 
 }
 

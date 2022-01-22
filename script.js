@@ -1,15 +1,15 @@
 jsonData = {
-"insert": {
-"mysql": {
-"2500": [
+  "insert": {
+    "mysql": {
+      "2500": [
 {
-"time": 0.68666100502014,
+"time": 0,
 "measured_at": "2022-01-21 22:17:03"
 }
 ],
 "5000": [
 {
-"time": 1.2965428829193,
+"time": 0,
 "measured_at": "2022-01-21 21:19:07"
 }
 ]
@@ -17,13 +17,13 @@ jsonData = {
 "mongodb": {
 "2500": [
 {
-"time": 2.7680230140686,
+"time": 0,
 "measured_at": "2022-01-21 22:17:10"
 }
 ],
 "5000": [
 {
-"time": 4.7095651626587,
+"time": 0,
 "measured_at": "2022-01-21 21:19:20"
 }
 ]
@@ -33,13 +33,13 @@ jsonData = {
 "mysql": {
 "2500": [
 {
-"time": 0.055603742599487,
+"time": 0,
 "measured_at": "2022-01-21 22:17:04"
 }
 ],
 "5000": [
 {
-"time": 0.11325693130493,
+"time": 0,
 "measured_at": "2022-01-21 21:19:07"
 }
 ]
@@ -47,13 +47,13 @@ jsonData = {
 "mongodb": {
 "2500": [
 {
-"time": 0.38271880149841,
+"time": 0,
 "measured_at": "2022-01-21 22:17:11"
 }
 ],
 "5000": [
 {
-"time": 0.79431819915771,
+"time": 0,
 "measured_at": "2022-01-21 21:19:20"
 }
 ]
@@ -63,13 +63,13 @@ jsonData = {
 "mysql": {
 "2500": [
 {
-"time": 0.47152209281921,
+"time": 0,
 "measured_at": "2022-01-21 22:17:04"
 }
 ],
 "5000": [
 {
-"time": 1.7106709480286,
+"time": 0,
 "measured_at": "2022-01-21 21:19:09"
 }
 ]
@@ -77,29 +77,29 @@ jsonData = {
 "mongodb": {
 "2500": [
 {
-"time": 1.6990346908569,
+"time": 0,
 "measured_at": "2022-01-21 22:17:12"
 }
 ],
 "5000": [
 {
-"time": 3.3800339698792,
+"time": 0,
 "measured_at": "2022-01-21 21:19:24"
 }
 ]
 }
 },
-"delete": {
+"remove": {
 "mysql": {
 "2500": [
 {
-"time": 0.58999514579773,
+"time": 0,
 "measured_at": "2022-01-21 22:17:05"
 }
 ],
 "5000": [
 {
-"time": 0.57951498031616,
+"time": 0,
 "measured_at": "2022-01-21 21:19:09"
 }
 ]
@@ -107,13 +107,13 @@ jsonData = {
 "mongodb": {
 "2500": [
 {
-"time": 1.1947767734528,
+"time": 0,
 "measured_at": "2022-01-21 22:17:14"
 }
 ],
 "5000": [
 {
-"time": 2.4008667469025,
+"time": 0,
 "measured_at": "2022-01-21 21:19:26"
 }
 ]
@@ -126,13 +126,23 @@ async function getData() {
   const textData = await data.text();
   const removeDelete = await textData.replaceAll('delete', 'remove');
   const jsonData = await JSON.parse(removeDelete);
-  console.log(jsonData)  
   return jsonData;
 }
 
 
 getData().then(result=>{
-  if(result === ''){result = this.jsonData};
+  if(result == false){
+    result = this.jsonData
+    const {insert, remove, select, update} = result;
+    const {mongodb: insertMongo, mysql: insertMysql} = insert;
+    const {mongodb: removeMongo, mysql: removeMysql} = remove;
+    const {mongodb: selectMongo, mysql: selectMysql} = select;
+    const {mongodb: updateMongo, mysql: updateMysql} = update;
+    drawChart(insertMongo, insertMysql, 0)
+    drawChart(removeMongo, removeMysql, 1)
+    drawChart(selectMongo, selectMysql, 2)
+    drawChart(updateMongo, updateMysql, 3)
+  };
   const {insert, remove, select, update} = result;
   const {mongodb: insertMongo, mysql: insertMysql} = insert;
   const {mongodb: removeMongo, mysql: removeMysql} = remove;
@@ -175,11 +185,17 @@ xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 // console.log(xhr.responseText);
 // }}
 xhr.send();
-}
+setTimeout(() => {
+  window.location.reload(true);
+  document.getElementById('warning').innerHTML = ""
+
+}, 500);}
 
 
 function startBenchmark() {
 const records = document.getElementById('records').value;
+if(records >= 0 && records <= 20000){
+document.getElementById('records').value = '';
 var xhr = new XMLHttpRequest();
 xhr.open("POST", "http://database-test.ddns.net/api/order-benchmark", true);
 
@@ -187,26 +203,36 @@ xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
 xhr.onreadystatechange = function () {
 if (xhr.readyState === 4) {
-console.log(xhr.responseText);
-}}
-const data = `usersRecord=${records}`;
-xhr.send(data);
+responseId = JSON.parse(xhr.responseText).id;
+console.log(responseId);
+setInterval( function() {checkBenchmark(responseId)}, 1000);
+  }
 }
 
-function checkBenchmark() {
+const data = `usersRecord=${records}`;
+xhr.send(data);
+document.getElementById('warning').innerHTML = "wait for the result"
+
+}
+}
+
+function checkBenchmark(id) {
 var xhr = new XMLHttpRequest();
-xhr.open("GET", "http://database-test.ddns.net/api/is-benchmark-done/1", true);
+xhr.open("GET", `http://database-test.ddns.net/api/is-benchmark-done/${id}`, true);
 
 xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
 
 xhr.onreadystatechange = function () {
 if (xhr.readyState === 4) {
-console.log(xhr.responseText);
+if (JSON.parse(xhr.responseText).done===true){
+  document.getElementById('warning').innerHTML = ""
+  window.location.reload(true);
+}
+else {console.log(xhr.responseText)}
 }}
 xhr.send();
 }
 
-checkBenchmark();
 
 
 function drawChart(mongo, mysql, id){
@@ -244,13 +270,13 @@ const ctx = document.getElementById(`chart${id}`).getContext("2d");
             yAxes: [{
               scaleLabel:{
               display: true,
-              labelString: 'Czas[s]'
+              labelString: 'Time[s]'
                 }
               }],
             xAxes: [{
               scaleLabel:{
               display: true,
-              labelString: 'Liczba rekordów'
+              labelString: 'Number of records'
                 }
               }]
             }     
