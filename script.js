@@ -126,6 +126,7 @@ async function getData() {
   const textData = await data.text();
   const removeDelete = await textData.replaceAll('delete', 'remove');
   const jsonData = await JSON.parse(removeDelete);
+  console.log(jsonData);
   return jsonData;
 }
 
@@ -282,4 +283,125 @@ const ctx = document.getElementById(`chart${id}`).getContext("2d");
             }     
     }
   })
+
+  const tabledata0 = document.getElementById('tableData0');
+  const tabledata1 = document.getElementById('tableData1');
+  const tabledata2 = document.getElementById('tableData2');
+  const tabledata3 = document.getElementById('tableData3');
+
+  const tabledatatr = document.createElement('tr');
+  const tabledatatd = document.createElement('td');
+  const tabledatatd2 = document.createElement('td');
+  const tabledatatd3 = document.createElement('td');
+
+  if(id === 0){
+
+
+    for(i = 0; i<myChart.data.labels.length; i++){
+
+      const tabledatatr = document.createElement('tr');
+      const tabledatatd = document.createElement('td');
+      const tabledatatd2 = document.createElement('td');
+      const tabledatatd3 = document.createElement('td');
+
+      const dataPoints = document.createTextNode(myChart.data.datasets[0].data[i].toFixed(3));
+      const dataPoints1 = document.createTextNode(myChart.data.datasets[1].data[i].toFixed(3));
+      const labelText = document.createTextNode(myChart.data.labels[i]+'s');
+
+      console.log(myChart.data.datasets[0].data[i]);
+      console.log(myChart.data.datasets[1].data[i].toFixed(2));
+
+      tabledatatd2.appendChild(dataPoints);
+      tabledatatd.appendChild(labelText);
+
+      tabledatatd3.appendChild(dataPoints1);
+      tabledatatr.appendChild(tabledatatd);
+      tabledatatr.appendChild(tabledatatd2);
+      tabledatatr.appendChild(tabledatatd3);
+      tabledata0.appendChild(tabledatatr);
+    }
+  }
+
+  if(id === 1){
+
+
+    for(i = 0; i<myChart.data.labels.length; i++){
+
+      const tabledatatr = document.createElement('tr');
+      const tabledatatd = document.createElement('td');
+      const tabledatatd2 = document.createElement('td');
+      const tabledatatd3 = document.createElement('td');
+
+      const dataPoints = document.createTextNode(myChart.data.datasets[0].data[i].toFixed(3));
+      const dataPoints1 = document.createTextNode(myChart.data.datasets[1].data[i].toFixed(3));
+      const labelText = document.createTextNode(myChart.data.labels[i]+'s');
+
+      console.log(myChart.data.datasets[0].data[i]);
+      console.log(myChart.data.datasets[1].data[i].toFixed(2));
+
+      tabledatatd2.appendChild(dataPoints);
+      tabledatatd.appendChild(labelText);
+
+      tabledatatd3.appendChild(dataPoints1);
+      tabledatatr.appendChild(tabledatatd);
+      tabledatatr.appendChild(tabledatatd2);
+      tabledatatr.appendChild(tabledatatd3);
+      tabledata1.appendChild(tabledatatr);
+    }
+  }
+  if(id === 2){
+
+
+    for(i = 0; i<myChart.data.labels.length; i++){
+
+      const tabledatatr = document.createElement('tr');
+      const tabledatatd = document.createElement('td');
+      const tabledatatd2 = document.createElement('td');
+      const tabledatatd3 = document.createElement('td');
+
+      const dataPoints = document.createTextNode(myChart.data.datasets[0].data[i].toFixed(3));
+      const dataPoints1 = document.createTextNode(myChart.data.datasets[1].data[i].toFixed(3));
+      const labelText = document.createTextNode(myChart.data.labels[i]+'s');
+
+      console.log(myChart.data.datasets[0].data[i]);
+      console.log(myChart.data.datasets[1].data[i].toFixed(2));
+
+      tabledatatd2.appendChild(dataPoints);
+      tabledatatd.appendChild(labelText);
+
+      tabledatatd3.appendChild(dataPoints1);
+      tabledatatr.appendChild(tabledatatd);
+      tabledatatr.appendChild(tabledatatd2);
+      tabledatatr.appendChild(tabledatatd3);
+      tabledata2.appendChild(tabledatatr);
+    }
+  }
+
+  if(id === 3){
+
+
+    for(i = 0; i<myChart.data.labels.length; i++){
+
+      const tabledatatr = document.createElement('tr');
+      const tabledatatd = document.createElement('td');
+      const tabledatatd2 = document.createElement('td');
+      const tabledatatd3 = document.createElement('td');
+
+      const dataPoints = document.createTextNode(myChart.data.datasets[0].data[i].toFixed(3));
+      const dataPoints1 = document.createTextNode(myChart.data.datasets[1].data[i].toFixed(3));
+      const labelText = document.createTextNode(myChart.data.labels[i]+'s');
+
+      console.log(myChart.data.datasets[0].data[i]);
+      console.log(myChart.data.datasets[1].data[i].toFixed(2));
+
+      tabledatatd2.appendChild(dataPoints);
+      tabledatatd.appendChild(labelText);
+
+      tabledatatd3.appendChild(dataPoints1);
+      tabledatatr.appendChild(tabledatatd);
+      tabledatatr.appendChild(tabledatatd2);
+      tabledatatr.appendChild(tabledatatd3);
+      tabledata3.appendChild(tabledatatr);
+    }
+  }
 }
